@@ -4,7 +4,7 @@ For automatically generating invoices.
 
 # Installation
 
-Install [https://www.tug.org/texlive/quickinstall.html](texlive) first. Then run:
+Install [texlive](https://www.tug.org/texlive/quickinstall.html) first. Then run:
 
 ```bash
 make install
