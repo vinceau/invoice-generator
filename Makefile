@@ -12,8 +12,6 @@ install:
 	# Update the TL install but add nothing new
 	sudo $(TLMGR) update --self --all --no-auto-install
 
-.DEFAULT:
-	@echo caught target $@
 
 clean:
 	rm -rf *.aux *.log *.out
