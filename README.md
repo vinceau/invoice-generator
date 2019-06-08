@@ -2,7 +2,7 @@
 
 For automatically generating invoices.
 
-# Installation
+## Installation
 
 Install [`texlive`](https://www.tug.org/texlive/quickinstall.html) first. Then run:
 
@@ -12,7 +12,7 @@ make install
 
 This will install the dependencies required for building.
 
-# Usage
+## Usage
 
 Modify the fields in `variables.tex` and `invoice.tex` appropriately.
 
