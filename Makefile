@@ -3,7 +3,7 @@ TLMGR = tlmgr
 
 DEP_FILE = requirements.txt
 
-.PHONY: install
+.PHONY: install clean
 
 install:
 	sudo $(TLMGR) install $(shell cat ${DEP_FILE})
@@ -14,3 +14,7 @@ install:
 
 .DEFAULT:
 	@echo caught target $@
+
+clean:
+	rm -rf *.aux *.log *.out
+
