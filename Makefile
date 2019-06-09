@@ -1,6 +1,7 @@
 PDFLATEX = pdflatex
 TLMGR = tlmgr
 PYTHON3 = python3
+PIP3 = pip3
 
 BUILD_DIR = .build
 PYTHON_SCRIPT = generate.py
@@ -11,7 +12,7 @@ DOCUMENT = \\input{variables}\\include{template}
 .PHONY: install clean
 
 install:
-	pip3 install --user -r ${PYTHON_REQ}
+	$(PIP3) install --user -r ${PYTHON_REQ}
 	sudo $(TLMGR) install $(shell cat ${LATEX_REQ})
 	# Keep no backups (not required, simply makes cache bigger)
 	sudo $(TLMGR) option -- autobackup 0
