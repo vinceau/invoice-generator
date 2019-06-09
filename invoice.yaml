@@ -25,6 +25,7 @@ fees:
 expenses:
     - title: Taxi fee reimbursement
       amount: 78.90
+      # expenses without currency specified is assumed to be in base_currency
     - title: Some foreign expense
       currency: USD
       foreign_amount: 10
