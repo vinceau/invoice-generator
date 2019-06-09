@@ -15,7 +15,7 @@ install:
 
 %.pdf: %.tex
 	$(PDFLATEX) "\\input{$*}${DOCUMENT}"
-	@ mv "./$(shell basename $*).pdf" "$(shell dirname $*)"
+	@[ ! -f $@ ] && mv -vn "./$(@F)" $@
 
 clean:
 	rm -rf *.aux *.log *.out
