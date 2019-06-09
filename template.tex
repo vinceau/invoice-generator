@@ -28,7 +28,7 @@
     \begin{invoice}{\VAR{ invoice.base_currency | default("AUD") }}{\VAR{ invoice.vat | default("0") }}
         \ProjectTitle{\VAR{ invoice.title | default("Invoice") }}
         \BLOCK{ for fee in invoice.fees }
-          \Fee{\VAR{fee.title}} {\VAR{fee.rate}} {\VAR{fee.count}}
+          \Fee{\VAR{fee.title}} {\VAR{fee.rate}} {\VAR{ fee.count | default("1") }}
         \BLOCK{ endfor }
         \STFee
         \BLOCK{ for exp in invoice.expenses }
