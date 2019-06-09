@@ -14,7 +14,8 @@ install:
 	sudo $(TLMGR) update --self --all --no-auto-install
 
 %.pdf: %.tex
-	$(PDFLATEX) "\\input{$*}${DOCUMENT}" -o $@
+	$(PDFLATEX) "\\input{$*}${DOCUMENT}"
+	@ mv "./$(shell basename $*).pdf" "$(shell dirname $*)"
 
 clean:
 	rm -rf *.aux *.log *.out
