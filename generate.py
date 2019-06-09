@@ -11,6 +11,7 @@ import yaml
 
 parser = argparse.ArgumentParser(description='Render a LaTex Template with variables.')
 
+parser.add_argument('-b','--build-dir', help='Specify the build directory', required=False, default='./.build/' )
 parser.add_argument('-i','--in', help='Invoice File', required=False, default='./invoice.yaml' )
 parser.add_argument('-v','--var', help='Variables File', required=False, default='./variables.yaml' )
 parser.add_argument('-o','--out', help='Output File', required=False, default='./output.pdf' )
@@ -22,9 +23,9 @@ project = "./"
 in_file = args['in']
 var_file = args['var']
 output_file = args['out']
-build_d = "{}.build/".format(project)
+build_d = args['build_dir']
 template_file = args['template']
-out_file = "{}renderer_template".format(build_d)
+out_file = os.path.join(build_d, "renderer_template")
 
 
 current_object = None
