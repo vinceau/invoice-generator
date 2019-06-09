@@ -2,15 +2,20 @@
 
 For automatically generating invoices.
 
+## Dependencies
+
+This project relies on the following:
+
+* [`texlive`](https://www.tug.org/texlive/quickinstall.html)
+* [`python3`](https://www.python.org/downloads/)
+
 ## Installation
 
-Install [`texlive`](https://www.tug.org/texlive/quickinstall.html) first. Then run:
+To install the required packages, run:
 
 ```bash
 make install
 ```
-
-This will install the dependencies required for building.
 
 ## Usage
 
@@ -25,4 +30,4 @@ make invoice.pdf
 If your invoice is saved as `invoice123.yaml` then to build it you would run `make invoice123.pdf`.
 
 
-This depends on the [`invoice`](https://ctan.org/pkg/invoice) package. For more information on defining complicated invoices read the [`invoice` documentation](http://mirrors.ctan.org/macros/latex/contrib/invoice/invoice.pdf).
+This depends on the [`invoice`](https://ctan.org/pkg/invoice) package. For more information on defining complicated invoices read the [`invoice` documentation](http://mirrors.ctan.org/macros/latex/contrib/invoice/invoice.pdf). You can modify the invoice output by modifying the `invoice.tex` and the`template.tex` files.
