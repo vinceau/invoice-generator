@@ -1,3 +1,5 @@
+variables: !include variables.yaml
+
 # By default the date of the invoice is the current date.
 # Uncomment the following line to backdate the invoice.
 # date: January 1, 1990

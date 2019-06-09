@@ -9,10 +9,25 @@ import re
 import shutil
 import yaml
 
+class Loader(yaml.SafeLoader):
+    """Loader is a custom loader that supports !import and !include statements
+    """
+
+    def __init__(self, stream):
+        self._root = os.path.split(stream.name)[0]
+        super(Loader, self).__init__(stream)
+        Loader.add_constructor('!include', Loader.include)
+        Loader.add_constructor('!import', Loader.include)
+
+    def include(self, node):
+        filename = os.path.join(self._root, self.construct_scalar(node))
+        with open(filename, 'r') as f:
+            return yaml.load(f, Loader)
+
 
 def load_yaml(file_name):
     with open(file_name, 'r') as stream:
-        return yaml.safe_load(stream)
+        return yaml.load(stream, Loader)
 
 
 def pdflatex(output_dir, input_tex, output_pdf):
@@ -51,16 +66,12 @@ def generate_latex(template_file, options, output_file):
 
 def main(args):
     in_file = args['in']
-    var_file = args['var']
     output_file = args['out']
     build_d = args['build_dir']
     template_file = args['template']
     out_file = os.path.join(build_d, "renderer_template")
 
-    options = {
-        "variables": load_yaml(var_file),
-        "invoice": load_yaml(in_file),
-    }
+    options = load_yaml(in_file)
 
     tex_file = os.path.realpath(out_file) + ".tex"
     generate_latex(os.path.realpath(template_file), options, tex_file)
@@ -78,8 +89,6 @@ if __name__ == '__main__':
                         required=False, default='./.build/')
     parser.add_argument('-i', '--in', help='Invoice File',
                         required=False, default='./invoice.yaml')
-    parser.add_argument('-v', '--var', help='Variables File',
-                        required=False, default='./variables.yaml')
     parser.add_argument('-o', '--out', help='Output File',
                         required=False, default='./output.pdf')
     parser.add_argument('-t', '--template', help='Template File',

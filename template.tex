@@ -20,20 +20,20 @@
 
 % INVOICE INFORMATION
 
-\BLOCK{ if invoice.date is defined }
-    \newcommand{\invoicedate}{\VAR{invoice.date}}
+\BLOCK{ if date is defined }
+    \newcommand{\invoicedate}{\VAR{date}}
 \BLOCK{ endif }
 
-\BLOCK{ set base_currency = invoice.base_currency | default("AUD") }
+\BLOCK{ set base_currency = base_currency | default("AUD") }
 
 \newcommand{\invoicecontent}{
-    \begin{invoice}{\VAR{ base_currency }}{\VAR{ invoice.vat | default("0") }}
-        \ProjectTitle{\VAR{ invoice.title | default("Invoice") }}
-        \BLOCK{ for fee in invoice.fees }
+    \begin{invoice}{\VAR{ base_currency }}{\VAR{ vat | default("0") }}
+        \ProjectTitle{\VAR{ title | default("Invoice") }}
+        \BLOCK{ for fee in fees }
           \Fee{\VAR{fee.title}} {\VAR{fee.rate}} {\VAR{ fee.count | default("1") }}
         \BLOCK{ endfor }
         \STFee
-        \BLOCK{ for exp in invoice.expenses }
+        \BLOCK{ for exp in expenses }
           \BLOCK{ if exp.currency and exp.currency != base_currency }
             \EFC{\VAR{ exp.title }}{\VAR{ exp.currency }}{\VAR{ exp.foreign_amount }}{\VAR{ exp.rate }}{\VAR{ exp.amount }}
           \BLOCK{ else }
