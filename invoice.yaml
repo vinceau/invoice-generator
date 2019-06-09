@@ -18,7 +18,21 @@ fees:
     - title: Payment for some service
       rate: 123.45
       count: 6
+    - title: Payment for some other service
+      rate: 456.78
+      # counts are assumed to be 1 if omitted
+
 expenses:
     - title: Taxi fee reimbursement
       amount: 78.90
+    - title: Some foreign expense
+      currency: USD
+      foreign_amount: 10
+      rate: 1.43
+      # amount can be omitted if rate is specified
+    - title: Some other foreign expense
+      currency: CAD
+      foreign_amount: 5
+      amount: 5.38
+      # if amount is specified then rate can be omitted
 
