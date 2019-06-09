@@ -1,6 +1,16 @@
 # Invoice Generator
 
-For automatically generating invoices.
+Automatically generate invoices from `yaml` files. For example:
+
+```yaml
+fees:
+    - title: Payment for some service
+      rate: 123.45
+      count: 6
+expenses:
+    - title: Taxi fee reimbursement
+      amount: 78.90
+```
 
 ## Dependencies
 
