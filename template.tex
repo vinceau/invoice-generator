@@ -34,7 +34,11 @@
         \BLOCK{ endfor }
         \STFee
         \BLOCK{ for exp in invoice.expenses }
-          \EBC{\VAR{exp.title}}{\VAR{exp.amount}}
+          \BLOCK{ if exp.currency and exp.currency != base_currency }
+            \EFC{\VAR{ exp.title }}{\VAR{ exp.currency }}{\VAR{ exp.foreign_amount }}{\VAR{ exp.rate }}{\VAR{ exp.amount }}
+          \BLOCK{ else }
+            \EBC{\VAR{exp.title}}{\VAR{exp.amount}}
+          \BLOCK{ endif }
         \BLOCK{ endfor }
         \STExpenses
     \end{invoice}
