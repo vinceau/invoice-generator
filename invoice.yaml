@@ -1,3 +1,19 @@
+# By default the date of the invoice is the current date.
+# Uncomment the following line to backdate the invoice.
+# date: January 1, 1990
+
+# By default the base currency is AUD.
+# Uncomment the following line to change the base currency.
+# base_currency: USD
+
+# By default the VAT is 0.
+# Uncomment the following line set the VAT rate.
+# vat: 19
+
+# By default the invoice title is "Invoice"
+# Uncomment the following line to set your own title.
+# title: My Special Invoice
+
 fees:
     - title: Payment for some service
       rate: 123.45
