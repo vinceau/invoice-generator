@@ -3,7 +3,6 @@ TLMGR = tlmgr
 PYTHON3 = python3
 PIP3 = pip3
 
-VAR_FILE = variables.yaml
 BUILD_DIR = .build
 PYTHON_SCRIPT = generate.py
 PYTHON_REQ = requirements.txt
@@ -20,7 +19,7 @@ install:
 	sudo $(TLMGR) update --self --all --no-auto-install
 
 %.pdf: %.yaml
-	$(PYTHON3) ${PYTHON_SCRIPT} -v "${VAR_FILE}" -b "${BUILD_DIR}" -i "$*.yaml" -o "$@"
+	$(PYTHON3) ${PYTHON_SCRIPT} -b "${BUILD_DIR}" -i "$*.yaml" -o "$@"
 
 clean:
 	rm -rf "${BUILD_DIR}"
