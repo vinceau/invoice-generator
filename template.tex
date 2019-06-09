@@ -24,8 +24,10 @@
     \newcommand{\invoicedate}{\VAR{invoice.date}}
 \BLOCK{ endif }
 
+\BLOCK{ set base_currency = invoice.base_currency | default("AUD") }
+
 \newcommand{\invoicecontent}{
-    \begin{invoice}{\VAR{ invoice.base_currency | default("AUD") }}{\VAR{ invoice.vat | default("0") }}
+    \begin{invoice}{\VAR{ base_currency }}{\VAR{ invoice.vat | default("0") }}
         \ProjectTitle{\VAR{ invoice.title | default("Invoice") }}
         \BLOCK{ for fee in invoice.fees }
           \Fee{\VAR{fee.title}} {\VAR{fee.rate}} {\VAR{ fee.count | default("1") }}
