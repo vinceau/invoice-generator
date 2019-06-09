@@ -1,0 +1,29 @@
+# PAYEE INFORMATION
+
+payee:
+    name: John Citizen
+    address: |-
+        123 Sesame Street \\
+        Suburb, STATE 1234 \\
+        Neverland
+    email: some@email.addr
+    phone: +12 345 678 9
+    abn: 1234567890
+
+bank:
+    name: My Bank Name
+    address: 888 Money Place, City, STATE 1234
+    swift_code: ABCSWIFT
+    account_name: My Bank Account
+    account_number: 12345678
+    bsb: 987654
+
+# PAYER INFORMATION
+
+payer:
+    name: Some Organisation Pte. Ltd
+    address: |-
+        456 Hello Road \\
+        A Place \\
+        Country 123456
+

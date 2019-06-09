@@ -1,0 +1,8 @@
+fees:
+    - title: Payment for some service
+      rate: 123.45
+      count: 6
+expenses:
+    - title: Taxi fee reimbursement
+      amount: 78.90
+

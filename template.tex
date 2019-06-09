@@ -1,35 +1,41 @@
-\documentclass{letter}
-\usepackage{hyperref}
-\usepackage{invoice}
-\usepackage[left=3cm, right=3cm, top=1cm, bottom=1cm]{geometry}
+% PAYEE INFORMATION
 
-\address{\textbf{From:} \\ \myname \\ \myaddress \\ \href{mailto:\myemail}{\myemail} \\ ABN \myabn}
-\signature{\myname \\ ABN \myabn}
-\providecommand{\invoicedate}{\today}
-\date{\invoicedate}
+\newcommand{\myname}{\VAR{variables.payee.name}}
+\newcommand{\myaddress}{\VAR{variables.payee.address}}
+\newcommand{\myemail}{\VAR{variables.payee.email}}
+\newcommand{\myphone}{\VAR{variables.payee.phone}}
+\newcommand{\myabn}{\VAR{variables.payee.abn}}
 
-\longindentation=0pt
+\newcommand{\bankname}{\VAR{variables.bank.name}}
+\newcommand{\bankaddress}{\VAR{variables.bank.address}}
+\newcommand{\bankswiftcode}{\VAR{variables.bank.swift_code}}
+\newcommand{\bankaccountname}{\VAR{variables.bank.account_name}}
+\newcommand{\bankaccountnumber}{\VAR{variables.bank.account_number}}
+\newcommand{\bankaccountbsb}{\VAR{variables.bank.bsb}}
 
-\begin{document}
-  \begin{letter}{\textbf{Bill to:} \\ \payername{} \\ \payeraddress{}}
-    \opening{}
-    \invoicecontent
-    Please make all cash payments via EFT to: \\
+% PAYER INFORMATION
 
-    \begin{tabular}{rl}
-      Bank Name: & \bankname \\
-      Bank address: & \bankaddress \\
-      Bank Swift Code: & \bankswiftcode \\
-      Account Name: & \bankaccountname \\
-      Account Number: & \bankaccountnumber \\
-      BSB: & \bankaccountbsb
-    \end{tabular}
+\newcommand{\payername}{\VAR{variables.payer.name}}
+\newcommand{\payeraddress}{\VAR{variables.payer.address}}
 
-      All amounts are exclusive of any taxes, government surcharges, royalty payments or any levies of any kind; or in the event that a Party is required by its own domestic applicable law or legal requirements to pay any domestic tax or levy, such payment shall be borne by that Party in order to fulfill their own domestic tax obligation or levy.
-    
-    If you have any questions concerning this invoice, please contact the email address listed above or phone \myphone.
+% INVOICE INFORMATION
 
-    \closing{Regards,}
+\BLOCK{ if date is defined }
+    \newcommand{\invoicedate}{\VAR{invoice.date}}
+\BLOCK{ endif }
 
-  \end{letter}
-\end{document}
+\newcommand{\invoicecontent}{
+    \begin{invoice}{\VAR{ invoice.base_currency | default("AUD") }}{\VAR{ invoice.vat | default("0") }}
+        \ProjectTitle{\VAR{ invoice.title | default("Invoice") }}
+        \BLOCK{ for fee in invoice.fees }
+          \Fee{\VAR{fee.title}} {\VAR{fee.rate}} {\VAR{fee.count}}
+        \BLOCK{ endfor }
+        \STFee
+        \BLOCK{ for exp in invoice.expenses }
+          \EBC{\VAR{exp.title}}{\VAR{exp.amount}}
+        \BLOCK{ endfor }
+        \STExpenses
+    \end{invoice}
+}
+
+\input{invoice}

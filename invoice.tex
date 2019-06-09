@@ -1,11 +1,35 @@
-% Uncomment the following line to backdate invoices
-% \newcommand{\invoicedate}{January 1, 2009}
+\documentclass{letter}
+\usepackage{hyperref}
+\usepackage{invoice}
+\usepackage[left=3cm, right=3cm, top=1cm, bottom=1cm]{geometry}
 
-\newcommand{\invoicecontent}{
-    \begin{invoice}{AUD}{0}
-      \ProjectTitle{Invoice No. 1}
-      \Fee{Payment for some service} {123.45} {6}
-      \EBC{Taxi fee reimbursement}{78.90}
-    \end{invoice}
-}
+\address{\textbf{From:} \\ \myname \\ \myaddress \\ \href{mailto:\myemail}{\myemail} \\ ABN \myabn}
+\signature{\myname \\ ABN \myabn}
+\providecommand{\invoicedate}{\today}
+\date{\invoicedate}
 
+\longindentation=0pt
+
+\begin{document}
+  \begin{letter}{\textbf{Bill to:} \\ \payername{} \\ \payeraddress{}}
+    \opening{}
+    \invoicecontent
+    Please make all cash payments via EFT to: \\
+
+    \begin{tabular}{rl}
+      Bank Name: & \bankname \\
+      Bank address: & \bankaddress \\
+      Bank Swift Code: & \bankswiftcode \\
+      Account Name: & \bankaccountname \\
+      Account Number: & \bankaccountnumber \\
+      BSB: & \bankaccountbsb
+    \end{tabular}
+
+      All amounts are exclusive of any taxes, government surcharges, royalty payments or any levies of any kind; or in the event that a Party is required by its own domestic applicable law or legal requirements to pay any domestic tax or levy, such payment shall be borne by that Party in order to fulfill their own domestic tax obligation or levy.
+    
+    If you have any questions concerning this invoice, please contact the email address listed above or phone \myphone.
+
+    \closing{Regards,}
+
+  \end{letter}
+\end{document}
