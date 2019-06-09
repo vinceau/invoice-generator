@@ -7,7 +7,6 @@ BUILD_DIR = .build
 PYTHON_SCRIPT = generate.py
 PYTHON_REQ = requirements.txt
 LATEX_REQ = requirements_latex.txt
-DOCUMENT = \\input{variables}\\include{template}
 
 .PHONY: install clean
 
