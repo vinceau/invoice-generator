@@ -26,11 +26,6 @@ class Loader(yaml.SafeLoader):
             return yaml.load(f, Loader)
 
 
-def load_yaml(file_name):
-    with open(file_name, 'r') as stream:
-        return yaml.load(stream, Loader)
-
-
 def pdflatex(output_dir, input_tex, output_pdf):
     os.system('pdflatex -output-directory {} {}'.format(output_dir, input_tex))
     input_name = os.path.splitext(input_tex)[0]
