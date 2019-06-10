@@ -3,20 +3,19 @@
 """Generates LaTeX from templates"""
 
 import argparse
-import jinja2
 import os
-import re
 import shutil
-import yaml
 import uuid
+import jinja2
+import yaml
 
 
 LATEX_JINJA_ENV = jinja2.Environment(
-    block_start_string='\BLOCK{',
+    block_start_string='\\BLOCK{',
     block_end_string='}',
-    variable_start_string='\VAR{',
+    variable_start_string='\\VAR{',
     variable_end_string='}',
-    comment_start_string='\#{',
+    comment_start_string='\\#{',
     comment_end_string='}',
     line_statement_prefix='%%',
     line_comment_prefix='%#',
@@ -98,11 +97,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Render a LaTex Template with variables.')
 
-    parser.add_argument('file', help='The invoice YAML file(s) to be processed', type=argparse.FileType('r'), nargs='+')
+    parser.add_argument('file', help='The invoice YAML file(s) to be processed',
+                        type=argparse.FileType('r'), nargs='+')
     parser.add_argument('-b', '--build-dir', help='Specify the build directory',
                         required=False, default='./.build/')
     parser.add_argument('-t', '--template', help='Template File',
                         required=False, default='./template.tex')
-    args = vars(parser.parse_args())
-
-    main(args)
+    main(vars(parser.parse_args()))
