@@ -65,29 +65,33 @@ def generate_latex(template_file, options, output_file):
         f.write(renderer_template)
 
 
+def process_file(in_file, build_dir, template_file):
+    unique_str = uuid.uuid4().hex[:6]
+    build_d = os.path.join(build_dir, unique_str)
+    out_file = os.path.join(build_d, "renderer_template")
+    tex_file = os.path.realpath(out_file) + ".tex"
+
+    options = yaml.load(in_file, Loader)
+    full_basename = os.path.splitext(in_file.name)[0]
+    output_file = full_basename + ".pdf"
+
+    # Check if the file already exists
+    if os.path.isfile(output_file):
+        new_output_file = "{}_{}.pdf".format(full_basename, unique_str)
+        print("{} already exists. Saving to: {}".format(output_file, new_output_file))
+        output_file = new_output_file
+
+    # Generate the final latex file
+    generate_latex(os.path.realpath(template_file), options, tex_file)
+    # Convert the latex file to PDF
+    pdflatex(os.path.realpath(build_d), tex_file, output_file)
+
+    return output_file
+
+
 def main(args):
-    template_file = args['template']
-
     for in_file in args['file']:
-        unique_str = uuid.uuid4().hex[:6]
-        build_d = os.path.join(args['build_dir'], unique_str)
-        out_file = os.path.join(build_d, "renderer_template")
-        tex_file = os.path.realpath(out_file) + ".tex"
-
-        options = yaml.load(in_file, Loader)
-        full_basename = os.path.splitext(in_file.name)[0]
-        output_file = full_basename + ".pdf"
-
-        # Check if the file already exists
-        if os.path.isfile(output_file):
-            new_output_file = "{}_{}.pdf".format(full_basename, unique_str)
-            print("{} already exists. Saving to: {}".format(output_file, new_output_file))
-            output_file = new_output_file
-
-        # Generate the final latex file
-        generate_latex(os.path.realpath(template_file), options, tex_file)
-        # Convert the latex file to PDF
-        pdflatex(os.path.realpath(build_d), tex_file, output_file)
+        output_file = process_file(in_file, args['build_dir'], args['template'])
         print("Generated: " + output_file)
 
 
