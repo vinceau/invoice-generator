@@ -19,7 +19,7 @@ install:
 	sudo $(TLMGR) update --self --all --no-auto-install
 
 %.pdf: %.yaml
-	$(PYTHON3) ${PYTHON_SCRIPT} -b "${BUILD_DIR}" -i "$*.yaml" -o "$@"
+	$(PYTHON3) ${PYTHON_SCRIPT} -b "${BUILD_DIR}" "$*.yaml"
 
 clean:
 	rm -rf "${BUILD_DIR}"
