@@ -41,6 +41,9 @@
           \BLOCK{ endif }
         \BLOCK{ endfor }
         \STExpenses
+        \BLOCK{ for dis in discounts }
+          \Discount{\VAR{ dis.title }} {\VAR{ dis.amount}}
+        \BLOCK{ endfor }
     \end{invoice}
 }
 
