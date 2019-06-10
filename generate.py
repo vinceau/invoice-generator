@@ -26,6 +26,7 @@ LATEX_JINJA_ENV = jinja2.Environment(
     keep_trailing_newline=True
 )
 
+
 class Loader(yaml.SafeLoader):
     """Loader is a custom loader that supports !import and !include statements
     """
@@ -97,7 +98,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Render a LaTex Template with variables.')
 
-    parser.add_argument('file', type=argparse.FileType('r'), nargs='+')
+    parser.add_argument('file', help='The invoice YAML file(s) to be processed', type=argparse.FileType('r'), nargs='+')
     parser.add_argument('-b', '--build-dir', help='Specify the build directory',
                         required=False, default='./.build/')
     parser.add_argument('-t', '--template', help='Template File',
