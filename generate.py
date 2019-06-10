@@ -48,8 +48,7 @@ def pdflatex(output_dir, input_tex, output_pdf):
     shutil.copy2(input_name+".pdf", output_pdf)
 
 
-def generate_latex(template_file, options, output_file):
-    template = LATEX_JINJA_ENV.get_template(template_file)
+def generate_latex(template, options, output_file):
     renderer_template = template.render(**options)
 
     # create the build directory if it does not exist
@@ -62,7 +61,7 @@ def generate_latex(template_file, options, output_file):
         f.write(renderer_template)
 
 
-def process_file(in_file, build_dir, template_file):
+def process_file(in_file, build_dir, template):
     unique_str = uuid.uuid4().hex[:6]
     build_d = os.path.join(build_dir, unique_str)
     out_file = os.path.join(build_d, "renderer_template")
@@ -79,7 +78,7 @@ def process_file(in_file, build_dir, template_file):
         output_file = new_output_file
 
     # Generate the final latex file
-    generate_latex(os.path.realpath(template_file), options, tex_file)
+    generate_latex(template, options, tex_file)
     # Convert the latex file to PDF
     pdflatex(os.path.realpath(build_d), tex_file, output_file)
 
@@ -87,8 +86,10 @@ def process_file(in_file, build_dir, template_file):
 
 
 def main(args):
+    template_file = os.path.realpath(args['template'])
+    template = LATEX_JINJA_ENV.get_template(template_file)
     for in_file in args['file']:
-        output_file = process_file(in_file, args['build_dir'], args['template'])
+        output_file = process_file(in_file, args['build_dir'], template)
         print("Generated: " + output_file)
 
 
