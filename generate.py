@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import yaml
+import uuid
 
 class Loader(yaml.SafeLoader):
     """Loader is a custom loader that supports !import and !include statements
@@ -67,7 +68,7 @@ def generate_latex(template_file, options, output_file):
 def main(args):
     in_file = args['in']
     output_file = args['out']
-    build_d = args['build_dir']
+    build_d = os.path.join(args['build_dir'], uuid.uuid4().hex)
     template_file = args['template']
     out_file = os.path.join(build_d, "renderer_template")
 
