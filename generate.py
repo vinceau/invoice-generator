@@ -10,6 +10,22 @@ import shutil
 import yaml
 import uuid
 
+
+LATEX_JINJA_ENV = jinja2.Environment(
+    block_start_string='\BLOCK{',
+    block_end_string='}',
+    variable_start_string='\VAR{',
+    variable_end_string='}',
+    comment_start_string='\#{',
+    comment_end_string='}',
+    line_statement_prefix='%%',
+    line_comment_prefix='%#',
+    trim_blocks=True,
+    autoescape=False,
+    loader=jinja2.FileSystemLoader(os.path.abspath('/')),
+    keep_trailing_newline=True
+)
+
 class Loader(yaml.SafeLoader):
     """Loader is a custom loader that supports !import and !include statements
     """
@@ -33,21 +49,7 @@ def pdflatex(output_dir, input_tex, output_pdf):
 
 
 def generate_latex(template_file, options, output_file):
-    latex_jinja_env = jinja2.Environment(
-        block_start_string='\BLOCK{',
-        block_end_string='}',
-        variable_start_string='\VAR{',
-        variable_end_string='}',
-        comment_start_string='\#{',
-        comment_end_string='}',
-        line_statement_prefix='%%',
-        line_comment_prefix='%#',
-        trim_blocks=True,
-        autoescape=False,
-        loader=jinja2.FileSystemLoader(os.path.abspath('/')),
-        keep_trailing_newline=True
-    )
-    template = latex_jinja_env.get_template(template_file)
+    template = LATEX_JINJA_ENV.get_template(template_file)
     renderer_template = template.render(**options)
 
     # create the build directory if it does not exist
