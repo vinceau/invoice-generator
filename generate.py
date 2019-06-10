@@ -66,32 +66,38 @@ def generate_latex(template_file, options, output_file):
 
 
 def main(args):
-    in_file = args['in']
-    output_file = args['out']
-    build_d = os.path.join(args['build_dir'], uuid.uuid4().hex)
     template_file = args['template']
-    out_file = os.path.join(build_d, "renderer_template")
 
-    options = load_yaml(in_file)
+    for in_file in args['file']:
+        unique_str = uuid.uuid4().hex[:6]
+        build_d = os.path.join(args['build_dir'], unique_str)
+        out_file = os.path.join(build_d, "renderer_template")
+        tex_file = os.path.realpath(out_file) + ".tex"
 
-    tex_file = os.path.realpath(out_file) + ".tex"
-    generate_latex(os.path.realpath(template_file), options, tex_file)
+        options = yaml.load(in_file, Loader)
+        full_basename = os.path.splitext(in_file.name)[0]
+        output_file = full_basename + ".pdf"
 
-    final = os.path.realpath(output_file)
-    pdflatex(os.path.realpath(build_d), tex_file, final)
-    print("Generated: " + final)
+        # Check if the file already exists
+        if os.path.isfile(output_file):
+            new_output_file = "{}_{}.pdf".format(full_basename, unique_str)
+            print("{} already exists. Saving to: {}".format(output_file, new_output_file))
+            output_file = new_output_file
+
+        # Generate the final latex file
+        generate_latex(os.path.realpath(template_file), options, tex_file)
+        # Convert the latex file to PDF
+        pdflatex(os.path.realpath(build_d), tex_file, output_file)
+        print("Generated: " + output_file)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Render a LaTex Template with variables.')
 
+    parser.add_argument('file', type=argparse.FileType('r'), nargs='+')
     parser.add_argument('-b', '--build-dir', help='Specify the build directory',
                         required=False, default='./.build/')
-    parser.add_argument('-i', '--in', help='Invoice File',
-                        required=False, default='./invoice.yaml')
-    parser.add_argument('-o', '--out', help='Output File',
-                        required=False, default='./output.pdf')
     parser.add_argument('-t', '--template', help='Template File',
                         required=False, default='./template.tex')
     args = vars(parser.parse_args())
